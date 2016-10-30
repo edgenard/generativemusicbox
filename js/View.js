@@ -17,14 +17,10 @@ View.prototype.updateDisplay = function () {
 }
 
 
-View.prototype.handleClick = function (event) {
-  const {x, y} = event
-  console.log(this)
-  this.drawCircle({x, y, radius: 100, opacity: 0.5})
-}
+
 
 View.prototype.drawCircle = function ({x, y, radius, opacity}) {
-  const surface = this.surface
+  const {surface} = this
   surface.beginPath()
   // x and y are the center of the arc
   // radius is the radius
@@ -34,4 +30,10 @@ View.prototype.drawCircle = function ({x, y, radius, opacity}) {
   surface.fillStyle = `rgba(${x % 256}, ${y % 256}, ${ x * y % 256}, ${opacity})`
   surface.fill()
 
+}
+
+
+View.prototype.handleClick = function (event) {
+  const {x, y} = event
+  this.drawCircle({x, y, radius: 100, opacity: 0.1})
 }
