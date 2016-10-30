@@ -1,16 +1,9 @@
 
 window.onload = function () {
-  const view = new View()
-  view.deleteDisplay = function () {
-    console.log('Delete display')
-  }
-
+  const canvas = document.getElementById('canvas')
+  const view = new View(canvas)
   view.updateDisplay()// Hello
 
-  view.deleteDisplay() // Delete display
+  canvas.addEventListener('click', view.handleClick.bind(view))
 
-  const view2 = new View()
-
-  view2.updateDisplay() // Hello
-  view2.deleteDisplay() // Prototypal Delete Display  
 }
