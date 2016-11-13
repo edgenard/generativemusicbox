@@ -5,19 +5,39 @@ const View = function (canvas) {
   this.surface = canvas.getContext('2d')
   this.width = canvas.width
   this.height = canvas.height
+  this.circles = []
+  this.frameRate = 1000 / 30
+  this.maxRadius = 100
 }
 
 View.prototype.updateDisplay = function () {
+  this.clearDisplay()
+
+  this.drawCircles()
+}
+
+View.prototype.drawCircles = function () {
+  this.circles.forEach((circle) => {
+    const {x, y, radius, opacity} = circle
+    if (radius < this.maxRadius) {
+      this.drawCircle({x, y, radius, opacity})
+      circle.radius += 1
+      circle.opacity =  radius / 100
+    } else {
+      circle.radius = 0
+      circle.opacity = 0.1
+    }
+
+  })
+
+}
+
+View.prototype.clearDisplay = function () {
   const {width, height, surface} = this
   surface.clearRect(0, 0, width, height)
   surface.fillStyle = '#707070'
   surface.fillRect(0, 0, width, height)
-
-  this.drawCircle({x: 300, y: 150, radius: 100, opacity: 0.5}  )
 }
-
-
-
 
 View.prototype.drawCircle = function ({x, y, radius, opacity}) {
   const {surface} = this
@@ -35,5 +55,7 @@ View.prototype.drawCircle = function ({x, y, radius, opacity}) {
 
 View.prototype.handleClick = function (event) {
   const {x, y} = event
-  this.drawCircle({x, y, radius: 100, opacity: 0.1})
+  this.circles.push({x, y, radius: 1, opacity: 0.1})
+  this.updateDisplay()
+
 }
