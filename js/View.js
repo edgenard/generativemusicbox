@@ -18,18 +18,17 @@ View.prototype.updateDisplay = function () {
 
 View.prototype.drawCircles = function () {
   this.circles.forEach((circle) => {
-    const {x, y, radius, opacity} = circle
+    const {x, y, radius, opacity, track} = circle
     if (radius < this.maxRadius) {
       this.drawCircle({x, y, radius, opacity})
       circle.radius += 1
       circle.opacity =  radius / 100
+      MyAudio.play(track, circle.opacity)
     } else {
       circle.radius = 0
       circle.opacity = 0.1
     }
-
   })
-
 }
 
 View.prototype.clearDisplay = function () {
@@ -55,7 +54,9 @@ View.prototype.drawCircle = function ({x, y, radius, opacity}) {
 
 View.prototype.handleClick = function (event) {
   const {x, y} = event
-  this.circles.push({x, y, radius: 1, opacity: 0.1})
+  const randomTrack = Math.floor(Math.random() * 10)
+  console.log('randomTrack is', randomTrack)
+  this.circles.push({x, y, radius: 1, opacity: 0.1, track: randomTrack })
   this.updateDisplay()
 
 }
